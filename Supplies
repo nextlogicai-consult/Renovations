@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>311 Candle Place SW — Landscape Estimate</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --stone: #c4b5a0;
+    --moss: #5a6e4a;
+    --soil: #3d2e1e;
+    --pebble: #8c7b6b;
+    --cream: #f5f0ea;
+    --bark: #2a1f14;
+    --rock: #6b6158;
+    --sky: #dde8d0;
+    --accent: #8fa870;
+  }
+
+  body {
+    background: var(--bark);
+    font-family: 'Instrument Sans', sans-serif;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    background: var(--cream);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--soil);
+    padding: 36px 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.015) 40px,
+      rgba(255,255,255,0.015) 80px
+    );
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .address-block h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .address-block h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--stone);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  .total-badge {
+    background: var(--moss);
+    border-radius: 3px;
+    padding: 16px 24px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .total-badge .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--sky);
+    margin-bottom: 4px;
+  }
+
+  .total-badge .amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 26px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .stat .s-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--pebble);
+  }
+
+  .stat .s-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    color: var(--stone);
+  }
+
+  .suppliers-note {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--rock);
+    font-style: italic;
+  }
+
+  /* BODY */
+  .body {
+    padding: 0 48px 48px;
+  }
+
+  /* PHASE */
+  .phase-block {
+    margin-top: 32px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--soil);
+  }
+
+  .phase-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--moss);
+    flex-shrink: 0;
+  }
+
+  .phase-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--soil);
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--rock);
+    font-weight: 600;
+    padding: 6px 10px;
+    text-align: left;
+    background: #ede7df;
+  }
+
+  thead th.right { text-align: right; }
+
+  tbody tr {
+    border-bottom: 1px solid #e8e0d5;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody tr:hover { background: rgba(90,110,74,0.04); }
+
+  td {
+    padding: 9px 10px;
+    font-size: 12px;
+    color: var(--soil);
+    vertical-align: top;
+  }
+
+  td.product {
+    font-weight: 500;
+    color: var(--bark);
+    max-width: 200px;
+  }
+
+  td.purpose {
+    font-size: 11px;
+    color: var(--pebble);
+    max-width: 220px;
+    line-height: 1.4;
+  }
+
+  td.note {
+    font-size: 10px;
+    color: var(--rock);
+    max-width: 200px;
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  td.num {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  td.total-cell {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+    font-weight: 500;
+    color: var(--moss);
+    white-space: nowrap;
+  }
+
+  td.zero { color: #bbb; }
+
+  /* PHASE SUBTOTAL */
+  .phase-sub {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px;
+    background: #ede7df;
+    border-radius: 0 0 2px 2px;
+    margin-bottom: 2px;
+  }
+
+  .phase-sub span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--pebble);
+  }
+
+  .phase-sub strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--soil);
+  }
+
+  /* FOOTER TOTAL */
+  .grand-total {
+    margin-top: 36px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .gt-box {
+    background: var(--soil);
+    padding: 20px 32px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .gt-box .gt-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--pebble);
+  }
+
+  .gt-box .gt-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--cream);
+  }
+
+  .legend {
+    margin-top: 24px;
+    padding: 14px 18px;
+    background: var(--sky);
+    border-radius: 3px;
+    font-size: 11px;
+    color: var(--moss);
+    line-height: 1.8;
+  }
+
+  .legend strong { color: var(--bark); }
+
+  .disclaimer {
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--rock);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="address-block">
+        <h1>311 Candle Place SW</h1>
+        <h2>Side Yard — Grass to River Rock + Stepping Stones</h2>
+      </div>
+      <div class="total-badge">
+        <div class="label">Estimated Total</div>
+        <div class="amount">$2,296.20</div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="stat">
+        <span class="s-label">Area</span>
+        <span class="s-value">378 sq ft</span>
+      </div>
+      <div class="stat">
+        <span class="s-label">Perimeter</span>
+        <span class="s-value">142 ft</span>
+      </div>
+      <div class="stat">
+        <span class="s-label">Suppliers</span>
+        <span class="s-value">Burnco · Cobblestone · RONA · Home Depot</span>
+      </div>
+    </div>
+    <div class="suppliers-note">Update Unit Price cells with current supplier quotes before purchasing.</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- PHASE 1 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-dot"></div>
+        <div class="phase-title">Phase 1 — Removal &amp; Preparation</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product / Material</th>
+            <th>Purpose</th>
+            <th>Unit</th>
+            <th class="right">Qty</th>
+            <th class="right">Unit Price</th>
+            <th class="right">Total</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>3</td>
+            <td class="product">Disposal Bin (Heavy Duty)</td>
+            <td class="purpose">Anytime bin disposal</td>
+            <td>Bin</td>
+            <td class="num">1.0</td>
+            <td class="num">$250.00</td>
+            <td class="total-cell">$250.00</td>
+            <td class="note">1 bin</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="product">Plate Compactor Rental</td>
+            <td class="purpose">Compact and level soil base — critical in Alberta clay</td>
+            <td>Day rental</td>
+            <td class="num">1.0</td>
+            <td class="num">$85.00</td>
+            <td class="total-cell">$85.00</td>
+            <td class="note">~$85/day at RONA or Home Depot. Do not skip — Calgary clay settles and heaves.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="product">Work Gloves (Heavy Duty)</td>
+            <td class="purpose">Hand protection for sod removal and stone handling</td>
+            <td>Pair</td>
+            <td class="num">0.0</td>
+            <td class="num">$18.00</td>
+            <td class="total-cell zero">$0.00</td>
+            <td class="note">~$18 at RONA.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$335.00</strong></div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-dot"></div>
+        <div class="phase-title">Phase 2 — Edging &amp; Border</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th>
+            <th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>6</td>
+            <td class="product">Landscape Edging — Black Steel</td>
+            <td class="purpose">Define clean border between river rock and lawn/fence</td>
+            <td>Linear ft</td>
+            <td class="num">157.0</td>
+            <td class="num">$2.20</td>
+            <td class="total-cell">$345.40</td>
+            <td class="note">142 ft + 10% = ~157 ft. Steel holds through Calgary freeze-thaw far better than plastic.</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td class="product">Edging Anchor Stakes (6")</td>
+            <td class="purpose">Secure steel edging firmly into ground</td>
+            <td>Pack (25)</td>
+            <td class="num">1.0</td>
+            <td class="num">$8.50</td>
+            <td class="total-cell">$8.50</td>
+            <td class="note">1 stake per 10 ft in clay soil. Packs of 25 ~$8.50 at RONA.</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td class="product">Rubber Mallet</td>
+            <td class="purpose">Drive stakes and set edging flush to grade</td>
+            <td>Item</td>
+            <td class="num">1.0</td>
+            <td class="num">—</td>
+            <td class="total-cell zero">$0.00</td>
+            <td class="note">Likely owned.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$353.90</strong></div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-dot"></div>
+        <div class="phase-title">Phase 3 — Weed Barrier</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th>
+            <th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>9</td>
+            <td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td>
+            <td class="purpose">Block weed growth under river rock — full area</td>
+            <td>Sq ft</td>
+            <td class="num">385.0</td>
+            <td class="num">$0.08</td>
+            <td class="total-cell">$30.80</td>
+            <td class="note">3.2 oz minimum — lighter fabric fails within 1–2 seasons. Overlap seams 6"+.</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td class="product">Landscape Fabric Ground Pins (6")</td>
+            <td class="purpose">Anchor weed barrier securely</td>
+            <td>Pack (50)</td>
+            <td class="num">1.0</td>
+            <td class="num">$9.00</td>
+            <td class="total-cell">$9.00</td>
+            <td class="note">1 pin per 40 sq ft. 6" pins essential in clay. Packs of 50 ~$9 at Home Depot.</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td class="product">Landscape Fabric Seam Tape</td>
+            <td class="purpose">Seal overlapping fabric seams</td>
+            <td>Roll</td>
+            <td class="num">2.0</td>
+            <td class="num">$6.50</td>
+            <td class="total-cell">$13.00</td>
+            <td class="note">Tape all seams and edges. ~$6.50/roll.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$52.80</strong></div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-dot"></div>
+        <div class="phase-title">Phase 4 — Base Gravel Layer</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th>
+            <th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12</td>
+            <td class="product">10mm Round Washed Rock</td>
+            <td class="purpose">1" compactable base layer under river rock</td>
+            <td>Ton</td>
+            <td class="num">1.0</td>
+            <td class="num">$100.00</td>
+            <td class="total-cell">$100.00</td>
+            <td class="note">1 yard bag covers 300 sq ft at 1". Can buy in bulk.</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td class="product">Rock Delivery Fee</td>
+            <td class="purpose">Delivery — first bag</td>
+            <td>First bag</td>
+            <td class="num">1.0</td>
+            <td class="num">$120.00</td>
+            <td class="total-cell">$120.00</td>
+            <td class="note"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-dot"></div>
+        <div class="phase-title">Phase 5 — Decorative River Rock</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th>
+            <th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>13</td>
+            <td class="product">River Rock — 1.5"–3" Natural Rounded (Grey/Tan Mix)</td>
+            <td class="purpose">Primary decorative surface finish across full side yard</td>
+            <td>Total</td>
+            <td class="num">2.0</td>
+            <td class="num">$240.00</td>
+            <td class="total-cell">$480.00</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td class="product">Rock Delivery Fee</td>
+            <td class="purpose">2nd, 3rd, and 4th bags</td>
+            <td>Per bag</td>
+            <td class="num">3.0</td>
+            <td class="num">$35.00</td>
+            <td class="total-cell">$105.00</td>
+            <td class="note"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$585.00</strong></div>
+    </div>
+
+    <!-- PHASE 6 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-dot"></div>
+        <div class="phase-title">Phase 6 — Stepping Stones</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th>
+            <th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>15</td>
+            <td class="product">Flagstone Stepping Stones (~18"×16")</td>
+            <td class="purpose">Replace concrete block path with attractive stepping stones</td>
+            <td>Stone</td>
+            <td class="num">35.0</td>
+            <td class="num">$20.00</td>
+            <td class="total-cell">$700.00</td>
+            <td class="note">35 stones × ~2 sq ft each. Natural flagstone ~$25–$35 at Cobblestone/Burnco. Cut weed barrier around each stone.</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td class="product">Coarse Levelling Sand</td>
+            <td class="purpose">Sand bed under each stepping stone</td>
+            <td>Bag (30kg)</td>
+            <td class="num">1.0</td>
+            <td class="num">$9.50</td>
+            <td class="total-cell">$9.50</td>
+            <td class="note">~0.5 bag per stone. Lay 1"–2" sand bed, level each stone, then pack river rock around it.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$709.50</strong></div>
+    </div>
+
+    <!-- PHASE 7 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-dot"></div>
+        <div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th>
+            <th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>17</td>
+            <td class="product">Landscape / Fan Rake</td>
+            <td class="purpose">Spread and level river rock evenly</td>
+            <td>Item</td>
+            <td class="num">1.0</td>
+            <td class="num">—</td>
+            <td class="total-cell zero">$0.00</td>
+            <td class="note">Likely already owned. If purchasing ~$25–$35 at RONA.</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td class="product">Fill Topsoil (for low spots)</td>
+            <td class="purpose">Level uneven ground before laying weed barrier</td>
+            <td>Bag (40L)</td>
+            <td class="num">4.0</td>
+            <td class="num">$8.50</td>
+            <td class="total-cell">$34.00</td>
+            <td class="note">Budget 4 bags for 378 sq ft. Adjust if significant dips found after sod removal.</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td class="product">Landscape Fabric Joining Clips / Zip Ties</td>
+            <td class="purpose">Secure fabric edges at edging border</td>
+            <td>Pack</td>
+            <td class="num">1.0</td>
+            <td class="num">$6.00</td>
+            <td class="total-cell">$6.00</td>
+            <td class="note">Tuck and clip fabric behind edging for clean finish.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$40.00</strong></div>
+    </div>
+
+    <!-- GRAND TOTAL -->
+    <div class="grand-total">
+      <div class="gt-box">
+        <div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6">Materials + Rentals · Excl. Labour</span></div>
+        <div class="gt-amount">$2,296.20</div>
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <strong>Legend:</strong>&nbsp;&nbsp;
+      🔵 Qty = auto-calculated from project dimensions &nbsp;|&nbsp;
+      🟡 Unit Price = update with current supplier quotes before purchasing &nbsp;|&nbsp;
+      🟢 Total = auto-calculated
+    </div>
+    <div class="disclaimer">Pricing based on Calgary suppliers (Burnco, Cobblestone, RONA, Home Depot) as of esti
