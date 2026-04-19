@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>311 Candle Place SW — Landscape Estimate</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --lavender-deep: #111827;
+    --lavender-mid: #374151;
+    --lavender-soft: #6b7280;
+    --lavender-pale: #f3f4f6;
+    --lavender-lightest: #f9fafb;
+    --lavender-accent: #e5e7eb;
+    --purple-dark: #111827;
+    --white: #ffffff;
+    --text-dark: #111827;
+    --text-mid: #374151;
+    --text-soft: #6b7280;
+    --border: #e5e7eb;
+    --row-hover: rgba(0,0,0,0.03);
+    --subtotal-bg: #f3f4f6;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --accent-border: #bfdbfe;
+  }
+
+  body {
+    background: #f1f5f9;
+    font-family: 'Instrument Sans', sans-serif;
+    padding: 24px 16px 48px;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 980px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(74,63,107,0.15), 0 2px 8px rgba(74,63,107,0.08);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+    padding: 32px 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .address-block h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(20px, 4vw, 28px);
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .address-block h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(13px, 2.5vw, 16px);
+    color: #9ca3af;
+    font-weight: 400;
+  }
+  .total-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .total-badge .label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #9ca3af;
+    margin-bottom: 4px;
+  }
+  .total-badge .amount {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 500;
+    color: #fff;
+  }
+  .header-stats {
+    display: flex;
+    gap: clamp(16px, 4vw, 32px);
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    flex-wrap: wrap;
+  }
+  .stat .s-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #9ca3af;
+    margin-bottom: 3px;
+  }
+  .stat .s-value {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(11px, 2vw, 14px);
+    color: rgba(255,255,255,0.85);
+  }
+  .suppliers-note {
+    margin-top: 10px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+  }
+
+  /* ── SCENARIO DROPDOWN ── */
+  .scenario-bar {
+    background: var(--lavender-pale);
+    border-bottom: 2px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .scenario-bar label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--lavender-deep);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .scenario-select-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+  }
+  .scenario-select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--lavender-deep);
+    font-size: 18px;
+    pointer-events: none;
+  }
+  #scenario-select {
+    width: 100%;
+    padding: 14px 44px 14px 16px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--purple-dark);
+    background: var(--white);
+    border: 2px solid var(--lavender-mid);
+    border-radius: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(74,63,107,0.10);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #scenario-select:focus {
+    outline: none;
+    border-color: var(--lavender-deep);
+    box-shadow: 0 0 0 3px rgba(74,63,107,0.15);
+  }
+  .scenario-panel { display: none; }
+  .scenario-panel.active { display: block; }
+
+  /* ── BODY ── */
+  .body { padding: 0 24px 40px; }
+
+  /* ── PHASE ── */
+  .phase-block { margin-top: 28px; }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--lavender-pale);
+  }
+  .phase-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--lavender-mid);
+    flex-shrink: 0;
+  }
+  .phase-title {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--lavender-deep);
+  }
+
+  /* ── DESKTOP TABLE ── */
+  .desktop-table { display: block; }
+  .mobile-cards  { display: none; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-soft);
+    font-weight: 600;
+    padding: 7px 10px;
+    text-align: left;
+    background: var(--lavender-lightest);
+    border-bottom: 1px solid var(--border);
+  }
+  thead th.right { text-align: right; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--row-hover); }
+  td { padding: 9px 10px; font-size: 12px; color: var(--text-dark); vertical-align: top; }
+  td.product    { font-weight: 500; color: var(--purple-dark); max-width: 180px; }
+  td.purpose    { font-size: 11px; color: var(--text-soft); max-width: 200px; line-height: 1.4; }
+  td.note       { font-size: 10px; color: var(--text-soft); max-width: 180px; line-height: 1.4; font-style: italic; }
+  td.num        { font-family: 'DM Mono', monospace; font-size: 12px; text-align: right; white-space: nowrap; }
+  td.total-cell { font-family: 'DM Mono', monospace; font-size: 12px; text-align: right; font-weight: 500; color: var(--lavender-deep); white-space: nowrap; }
+  td.zero       { color: #c4bbd8; }
+
+  /* ── PHASE SUBTOTAL ── */
+  .phase-sub {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px;
+    background: var(--subtotal-bg);
+    border-radius: 0 0 6px 6px;
+  }
+  .phase-sub span   { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-soft); }
+  .phase-sub strong { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--lavender-deep); }
+
+  /* ── MOBILE CARDS ── */
+  .card {
+    background: var(--lavender-lightest);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+  .card-product { font-weight: 600; font-size: 13px; color: var(--purple-dark); flex: 1; }
+  .card-total   { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--lavender-deep); white-space: nowrap; }
+  .card-total.zero { color: #c4bbd8; }
+  .card-purpose { font-size: 12px; color: var(--text-mid); margin-bottom: 8px; line-height: 1.4; }
+  .card-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .card-meta-item  { display: flex; flex-direction: column; gap: 1px; }
+  .card-meta-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-soft); }
+  .card-meta-value { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-dark); }
+  .card-note {
+    font-size: 11px;
+    color: var(--text-soft);
+    font-style: italic;
+    line-height: 1.4;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    margin-top: 4px;
+  }
+
+  /* ── GRAND TOTAL ── */
+  .grand-total { margin-top: 32px; display: flex; justify-content: flex-end; }
+  .gt-box {
+    background: linear-gradient(135deg, var(--lavender-deep), var(--lavender-mid));
+    padding: 18px 28px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 400px;
+  }
+  .gt-box .gt-label  { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--lavender-accent); line-height: 1.6; }
+  .gt-box .gt-amount { font-family: 'DM Mono', monospace; font-size: clamp(24px, 5vw, 30px); font-weight: 500; color: #fff; }
+
+  /* ── LEGEND ── */
+  .legend {
+    margin-top: 20px;
+    padding: 14px 16px;
+    background: var(--lavender-pale);
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--lavender-mid);
+    line-height: 2;
+  }
+  .legend strong { color: var(--lavender-deep); }
+  .disclaimer {
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--text-soft);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    body { padding: 12px 10px 40px; }
+    .header { padding: 24px 20px 22px; }
+    .header-top { flex-direction: column; gap: 14px; }
+    .total-badge { text-align: left; width: 100%; }
+    .desktop-table { display: none; }
+    .mobile-cards  { display: block; }
+    .body { padding: 0 14px 32px; }
+    .grand-total { justify-content: stretch; }
+    .gt-box { max-width: 100%; }
+    .legend { font-size: 10px; line-height: 1.8; }
+    .scenario-bar { padding: 12px 14px; gap: 8px; }
+    #scenario-select { font-size: 14px; padding: 12px 40px 12px 14px; }
+  }
+  @media (max-width: 400px) {
+    .header-stats { gap: 12px; }
+    .stat .s-value { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="address-block">
+        <h1>311 Candle Place SW</h1>
+        <h2>Side Yard — Grass to Washed Rock + Stepping Stones · 4 ft wide</h2>
+      </div>
+      <div class="total-badge">
+        <div class="label">See Scenarios Below</div>
+        <div class="amount" id="header-total">$1,011.52</div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="stat"><div class="s-label">Path Length</div><div class="s-value">75 ft</div></div>
+      <div class="stat"><div class="s-label">Path Width</div><div class="s-value">4 ft</div></div>
+      <div class="stat"><div class="s-label">Area</div><div class="s-value">350 sq ft</div></div>
+      <div class="stat"><div class="s-label">Suppliers</div><div class="s-value">BulkDirect · Amico Stone · Home Depot · Amazon</div></div>
+    </div>
+    <div class="suppliers-note">Update unit prices with current supplier quotes before purchasing.</div>
+  </div>
+
+  <!-- SCENARIO DROPDOWN -->
+  <div class="scenario-bar">
+    <label for="scenario-select">📋 Choose Scenario</label>
+    <div class="scenario-select-wrap">
+      <select id="scenario-select" onchange="showScenario(this.value)">
+        <optgroup label="── 20mm Washed Rock ($78.99/ton) ──">
+          <option value="b">We Dump · Washed Rock · 17 Stones — $1,081.52 ✓ Cheapest</option>
+          <option value="a">We Dump · Washed Rock · 23 Stones — $1,201.52</option>
+          <option value="d" selected>U-Haul · Washed Rock · 17 Stones — $1,165.52</option>
+          <option value="c">U-Haul · Washed Rock · 23 Stones — $1,285.52</option>
+        </optgroup>
+        <optgroup label="── 20mm Montana Rock ($240/ton) ──">
+          <option value="e">We Dump · Montana Rock · 17 Stones — $1,403.54</option>
+          <option value="f">We Dump · Montana Rock · 23 Stones — $1,523.54</option>
+          <option value="g">U-Haul · Montana Rock · 17 Stones — $1,487.54</option>
+          <option value="h">U-Haul · Montana Rock · 23 Stones — $1,607.54</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO A — We Dump · 23 Stones = $1,131.52
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel" id="panel-a">
+  <div class="body">
+
+    <!-- PHASE 1 -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table">
+        <table>
+          <thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="product">We Dump (Landfill Run)</td><td class="purpose">Tiles and debris disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$25.00</td><td class="total-cell">$25.00</td><td class="note">Use SUV — confirm weight capacity before loading.</td></tr>
+            <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection for tile removal and stone handling</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">We Dump (Landfill Run)</div><div class="card-total">$25.00</div></div><div class="card-purpose">Tiles and debris disposal</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Unit</div><div class="card-meta-value">Trip</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$25.00</div></div></div><div class="card-note">Use SUV — confirm weight capacity before loading.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Work Gloves (Heavy Duty)</div><div class="card-total zero">$0.00</div></div><div class="card-purpose">Hand protection for tile removal and stone handling</div><div class="card-note">~$18 at Home Depot. Update qty if needed.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$25.00</strong></div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table">
+        <table>
+          <thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</td></tr>
+            <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it with plenty of spares.</td></tr>
+            <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">83.0 ft</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$2.20</div></div></div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">1 pack</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$8.50</div></div></div><div class="card-note">~8 stakes needed. 1 pack of 25 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rubber Mallet</div><div class="card-total zero">$0.00</div></div><div class="card-purpose">Drive stakes and set edging flush to grade</div><div class="card-note">Likely already owned.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table">
+        <table>
+          <thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock — full 75 ft path</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap = ~368 sq ft. A 4ft × 100ft roll covers the full path. 3.2 oz minimum.</td></tr>
+            <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely to ground</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">~6 pins needed. 1 pack of 50 is more than sufficient.</td></tr>
+            <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft single-path layout.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock — full 75 ft path</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Sq ft</div><div class="card-meta-value">368.0</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$0.08</div></div></div><div class="card-note">4ft × 100ft roll covers the full path. 3.2 oz minimum.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins (6")</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier securely to ground</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">1 pack</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$9.00</div></div></div><div class="card-note">~6 pins needed. 1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">1 roll</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$6.50</div></div></div><div class="card-note">1 roll sufficient for a 75 ft single-path layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table">
+        <table>
+          <thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer under decorative rock</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">1 yard bag covers ~300 sq ft at 1" depth — sufficient for 350 sq ft path.</td></tr>
+            <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">First bag delivery fee. Combine orders where possible to reduce total delivery costs.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" compactable base layer under decorative rock</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Unit</div><div class="card-meta-value">Ton</div></div><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">1.0</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$100.00</div></div></div><div class="card-note">1 yard bag covers ~300 sq ft at 1" depth. Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">1.0</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$120.00</div></div></div><div class="card-note">Combine orders where possible to reduce total delivery costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table">
+        <table>
+          <thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>11</td><td class="product">20mm Washed Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton</td><td class="num">2.0</td><td class="num">$78.99</td><td class="total-cell">$157.98</td><td class="note">2 tons covers 350 sq ft at 2" depth. Order via BulkDirect.</td></tr>
+            <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock (2 bags)</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag delivery at $35 each. 1 bag per ton.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Washed Rock</div><div class="card-total">$157.98</div></div><div class="card-purpose">Decorative surface finish across 75 ft path</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">2 tons</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$78.99/ton</div></div></div><div class="card-note">2 tons covers 350 sq ft at 2" depth.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock (2 bags)</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">2 bags</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$35.00</div></div></div><div class="card-note">2nd and 3rd bag delivery at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$227.98</strong></div>
+    </div>
+
+    <!-- PHASE 6 — 23 stones -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (23 stones · 1 ft gap)</div></div>
+      <div class="desktop-table">
+        <table>
+          <thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">23.0</td><td class="num">$20.00</td><td class="total-cell">$460.00</td><td class="note">23 stones with 1 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+            <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, level, then pack rock tightly around each one.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$460.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">23 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">23 stones with 1 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">1 bag</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$9.50</div></div></div><div class="card-note">Lay 1"–2" sand bed per stone, level, then pack rock around each one.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$469.50</strong></div>
+    </div>
+
+    <!-- PHASE 7 -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table">
+        <table>
+          <thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly across path</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned. If purchasing ~$25–$35 at Home Depot.</td></tr>
+            <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before laying weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path. Adjust if significant dips found after tile removal.</td></tr>
+            <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish along the fence line.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape / Fan Rake</div><div class="card-total zero">$0.00</div></div><div class="card-purpose">Spread and level rock evenly across path</div><div class="card-note">Likely already owned. If purchasing ~$25–$35 at Home Depot.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground before laying weed barrier</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">2 bags</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$8.50</div></div></div><div class="card-note">Adjust if significant dips after tile removal.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges at edging border</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">1 pack</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$6.00</div></div></div><div class="card-note">Tuck and clip fabric behind edging for a clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">We Dump · 23 Stones · Excl. Labour</span></div><div class="gt-amount">$1,201.52</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out. We dump cost = $25 landfill fee.</div>
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO B — We Dump · 17 Stones = $1,081.52
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel" id="panel-b">
+  <div class="body">
+    <!-- Phases 1-5 same as A, Phase 6 = 17 stones -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>1</td><td class="product">We Dump (Landfill Run)</td><td class="purpose">Tiles and debris disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$25.00</td><td class="total-cell">$25.00</td><td class="note">Use SUV — confirm weight capacity before loading.</td></tr>
+        <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">We Dump (Landfill Run)</div><div class="card-total">$25.00</div></div><div class="card-purpose">Tiles and debris disposal</div><div class="card-note">Use SUV — confirm weight capacity before loading.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$25.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</td></tr>
+        <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it with plenty of spares.</td></tr>
+        <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-note">~8 stakes needed. 1 pack of 25 is more than sufficient.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock — full 75 ft path</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap. 4ft × 100ft roll covers the full path.</td></tr>
+        <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely to ground</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">~6 pins needed. 1 pack of 50 is more than sufficient.</td></tr>
+        <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft single-path layout.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock</div><div class="card-note">4ft × 100ft roll covers the full path. 3.2 oz minimum.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier securely</div><div class="card-note">1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-note">1 roll sufficient for 75 ft layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer under decorative rock</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">1 yard bag covers ~300 sq ft at 1" depth.</td></tr>
+        <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">Combine orders where possible to reduce delivery costs.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" base layer</div><div class="card-note">Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-note">Combine orders to reduce delivery costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>11</td><td class="product">20mm Washed Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton</td><td class="num">2.0</td><td class="num">$78.99</td><td class="total-cell">$157.98</td><td class="note">2 tons covers 350 sq ft at 2" depth.</td></tr>
+        <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock (2 bags)</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag delivery at $35 each.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Washed Rock</div><div class="card-total">$157.98</div></div><div class="card-purpose">Decorative surface finish</div><div class="card-note">2 tons covers 350 sq ft at 2" depth.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock</div><div class="card-note">2nd and 3rd bag at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$227.98</strong></div>
+    </div>
+    <!-- PHASE 6 — 17 stones -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (17 stones · 2 ft gap)</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">17.0</td><td class="num">$20.00</td><td class="total-cell">$340.00</td><td class="note">17 stones with 2 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+        <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, level, then pack rock tightly around each one.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$340.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">17 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">17 stones with 2 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-note">Lay 1"–2" sand bed per stone.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$349.50</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly across path</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+        <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before laying weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path.</td></tr>
+        <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground</div><div class="card-note">2 bags appropriate for 350 sq ft.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges</div><div class="card-note">Tuck and clip behind edging for clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">We Dump · 17 Stones · Excl. Labour</span></div><div class="gt-amount">$1,081.52</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out. We dump cost = $25 landfill fee.</div>
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO C — U-Haul · 23 Stones = $1,285.52
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel" id="panel-c">
+  <div class="body">
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>1</td><td class="product">U-Haul + Landfill Fees</td><td class="purpose">Tiles and debris removal and disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$109.00</td><td class="total-cell">$109.00</td><td class="note">U-Haul rental + landfill drop-off fees combined.</td></tr>
+        <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">U-Haul + Landfill Fees</div><div class="card-total">$109.00</div></div><div class="card-purpose">Tiles and debris removal and disposal</div><div class="card-note">U-Haul rental + landfill drop-off fees combined.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$109.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only.</td></tr>
+        <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it.</td></tr>
+        <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-note">~8 stakes needed. 1 pack of 25 covers it.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap. 4ft × 100ft roll covers the full path.</td></tr>
+        <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">1 pack of 50 is more than sufficient.</td></tr>
+        <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft layout.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock</div><div class="card-note">4ft × 100ft roll covers the full path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier</div><div class="card-note">1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-note">1 roll sufficient for 75 ft layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">Sufficient for 350 sq ft path at 1" depth.</td></tr>
+        <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">Combine orders where possible to reduce costs.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" base layer</div><div class="card-note">Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-note">Combine orders to reduce costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>11</td><td class="product">20mm Washed Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton</td><td class="num">2.0</td><td class="num">$78.99</td><td class="total-cell">$157.98</td><td class="note">2 tons covers 350 sq ft at 2" depth.</td></tr>
+        <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag at $35 each.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Washed Rock</div><div class="card-total">$157.98</div></div><div class="card-purpose">Decorative surface finish</div><div class="card-note">2 tons covers 350 sq ft at 2" depth.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock</div><div class="card-note">2nd and 3rd bag at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$227.98</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (23 stones · 1 ft gap)</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">23.0</td><td class="num">$20.00</td><td class="total-cell">$460.00</td><td class="note">23 stones with 1 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+        <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, then pack rock around each one.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$460.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">23 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">23 stones with 1 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-note">Lay 1"–2" sand bed per stone.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$469.50</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+        <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path.</td></tr>
+        <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground</div><div class="card-note">2 bags for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges</div><div class="card-note">Tuck and clip for a clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">U-Haul · 23 Stones · Excl. Labour</span></div><div class="gt-amount">$1,285.52</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out. U-Haul + landfill = $109 total.</div>
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO D — U-Haul · 17 Stones = $1,165.52  ← DEFAULT
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel active" id="panel-d">
+  <div class="body">
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>1</td><td class="product">U-Haul + Landfill Fees</td><td class="purpose">Tiles and debris removal and disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$109.00</td><td class="total-cell">$109.00</td><td class="note">U-Haul rental + landfill drop-off fees combined.</td></tr>
+        <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">U-Haul + Landfill Fees</div><div class="card-total">$109.00</div></div><div class="card-purpose">Tiles and debris removal and disposal</div><div class="card-note">U-Haul rental + landfill drop-off fees combined.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$109.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</td></tr>
+        <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it.</td></tr>
+        <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-note">~8 stakes needed. 1 pack of 25 covers it.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap. 4ft × 100ft roll covers the full path.</td></tr>
+        <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">1 pack of 50 is more than sufficient.</td></tr>
+        <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft layout.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock</div><div class="card-note">4ft × 100ft roll covers the full path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier</div><div class="card-note">1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-note">1 roll sufficient for 75 ft layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">Sufficient for 350 sq ft path at 1" depth.</td></tr>
+        <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">Combine orders where possible to reduce costs.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" base layer</div><div class="card-note">Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-note">Combine orders to reduce costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>11</td><td class="product">20mm Washed Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton</td><td class="num">2.0</td><td class="num">$78.99</td><td class="total-cell">$157.98</td><td class="note">2 tons covers 350 sq ft at 2" depth.</td></tr>
+        <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag at $35 each.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Washed Rock</div><div class="card-total">$157.98</div></div><div class="card-purpose">Decorative surface finish</div><div class="card-note">2 tons covers 350 sq ft at 2" depth.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock</div><div class="card-note">2nd and 3rd bag at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$227.98</strong></div>
+    </div>
+    <!-- PHASE 6 — 17 stones -->
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (17 stones · 2 ft gap)</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">17.0</td><td class="num">$20.00</td><td class="total-cell">$340.00</td><td class="note">17 stones with 2 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+        <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, then pack rock around each one.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$340.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">17 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">17 stones with 2 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-note">Lay 1"–2" sand bed per stone.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$349.50</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+        <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path.</td></tr>
+        <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground</div><div class="card-note">2 bags for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges</div><div class="card-note">Tuck and clip for a clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">U-Haul · 17 Stones · Excl. Labour</span></div><div class="gt-amount">$1,165.52</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out. U-Haul + landfill = $109 total.</div>
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO E — We Dump · Montana Rock · 17 Stones = $1,403.54
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel" id="panel-e">
+  <div class="body">
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>1</td><td class="product">We Dump (Landfill Run)</td><td class="purpose">Tiles and debris disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$25.00</td><td class="total-cell">$25.00</td><td class="note">Use SUV — confirm weight capacity before loading.</td></tr>
+        <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection for tile removal and stone handling</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">We Dump (Landfill Run)</div><div class="card-total">$25.00</div></div><div class="card-purpose">Tiles and debris disposal</div><div class="card-note">Use SUV — confirm weight capacity before loading.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$25.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</td></tr>
+        <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it.</td></tr>
+        <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-note">~8 stakes needed. 1 pack of 25 covers it.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap. 4ft × 100ft roll covers the full path.</td></tr>
+        <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">1 pack of 50 is more than sufficient.</td></tr>
+        <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft layout.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock</div><div class="card-note">4ft × 100ft roll covers the full path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier</div><div class="card-note">1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-note">1 roll sufficient for 75 ft layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">Sufficient for 350 sq ft path at 1" depth.</td></tr>
+        <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">Combine orders where possible to reduce costs.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" base layer</div><div class="card-note">Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-note">Combine orders to reduce costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>11</td><td class="product">20mm Montana Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton/Bag</td><td class="num">2.0</td><td class="num">$240.00</td><td class="total-cell">$480.00</td><td class="note">2 tons covers 350 sq ft at 2" depth. Premium Montana Rock.</td></tr>
+        <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag at $35 each.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Montana Rock</div><div class="card-total">$480.00</div></div><div class="card-purpose">Decorative surface finish</div><div class="card-note">2 tons covers 350 sq ft at 2" depth. $240/ton.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock</div><div class="card-note">2nd and 3rd bag at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$550.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (17 stones · 2 ft gap)</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">17.0</td><td class="num">$20.00</td><td class="total-cell">$340.00</td><td class="note">17 stones with 2 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+        <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, then pack rock around each one.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$340.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">17 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">17 stones with 2 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-note">Lay 1"–2" sand bed per stone.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$349.50</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+        <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path.</td></tr>
+        <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground</div><div class="card-note">2 bags for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges</div><div class="card-note">Tuck and clip for a clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">We Dump · Montana Rock · 17 Stones · Excl. Labour</span></div><div class="gt-amount">$1,403.54</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out.</div>
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO F — We Dump · Montana Rock · 23 Stones = $1,523.54
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel" id="panel-f">
+  <div class="body">
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>1</td><td class="product">We Dump (Landfill Run)</td><td class="purpose">Tiles and debris disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$25.00</td><td class="total-cell">$25.00</td><td class="note">Use SUV — confirm weight capacity before loading.</td></tr>
+        <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection for tile removal and stone handling</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">We Dump (Landfill Run)</div><div class="card-total">$25.00</div></div><div class="card-purpose">Tiles and debris disposal</div><div class="card-note">Use SUV — confirm weight capacity before loading.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$25.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</td></tr>
+        <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it.</td></tr>
+        <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-note">~8 stakes needed. 1 pack of 25 covers it.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap. 4ft × 100ft roll covers the full path.</td></tr>
+        <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">1 pack of 50 is more than sufficient.</td></tr>
+        <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft layout.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock</div><div class="card-note">4ft × 100ft roll covers the full path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier</div><div class="card-note">1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-note">1 roll sufficient for 75 ft layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">Sufficient for 350 sq ft path at 1" depth.</td></tr>
+        <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">Combine orders where possible to reduce costs.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" base layer</div><div class="card-note">Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-note">Combine orders to reduce costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>11</td><td class="product">20mm Montana Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton/Bag</td><td class="num">2.0</td><td class="num">$240.00</td><td class="total-cell">$480.00</td><td class="note">2 tons covers 350 sq ft at 2" depth. Premium Montana Rock.</td></tr>
+        <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag at $35 each.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Montana Rock</div><div class="card-total">$480.00</div></div><div class="card-purpose">Decorative surface finish</div><div class="card-note">2 tons covers 350 sq ft at 2" depth. $240/ton.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock</div><div class="card-note">2nd and 3rd bag at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$550.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (23 stones · 1 ft gap)</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">23.0</td><td class="num">$20.00</td><td class="total-cell">$460.00</td><td class="note">23 stones with 1 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+        <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, then pack rock around each one.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$460.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">23 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">23 stones with 1 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-note">Lay 1"–2" sand bed per stone.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$469.50</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+        <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path.</td></tr>
+        <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground</div><div class="card-note">2 bags for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges</div><div class="card-note">Tuck and clip for a clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">We Dump · Montana Rock · 23 Stones · Excl. Labour</span></div><div class="gt-amount">$1,523.54</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out.</div>
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO G — U-Haul · Montana Rock · 17 Stones = $1,487.54
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel" id="panel-g">
+  <div class="body">
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>1</td><td class="product">U-Haul + Landfill Fees</td><td class="purpose">Tiles and debris removal and disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$109.00</td><td class="total-cell">$109.00</td><td class="note">U-Haul rental + landfill drop-off fees combined.</td></tr>
+        <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">U-Haul + Landfill Fees</div><div class="card-total">$109.00</div></div><div class="card-purpose">Tiles and debris removal and disposal</div><div class="card-note">U-Haul rental + landfill drop-off fees combined.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$109.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</td></tr>
+        <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it.</td></tr>
+        <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-note">~8 stakes needed. 1 pack of 25 covers it.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap. 4ft × 100ft roll covers the full path.</td></tr>
+        <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">1 pack of 50 is more than sufficient.</td></tr>
+        <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft layout.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock</div><div class="card-note">4ft × 100ft roll covers the full path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier</div><div class="card-note">1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-note">1 roll sufficient for 75 ft layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">Sufficient for 350 sq ft path at 1" depth.</td></tr>
+        <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">Combine orders where possible to reduce costs.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" base layer</div><div class="card-note">Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-note">Combine orders to reduce costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>11</td><td class="product">20mm Montana Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton/Bag</td><td class="num">2.0</td><td class="num">$240.00</td><td class="total-cell">$480.00</td><td class="note">2 tons covers 350 sq ft at 2" depth. Premium Montana Rock.</td></tr>
+        <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag at $35 each.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Montana Rock</div><div class="card-total">$480.00</div></div><div class="card-purpose">Decorative surface finish</div><div class="card-note">2 tons covers 350 sq ft at 2" depth. $240/ton.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock</div><div class="card-note">2nd and 3rd bag at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$550.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (17 stones · 2 ft gap)</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">17.0</td><td class="num">$20.00</td><td class="total-cell">$340.00</td><td class="note">17 stones with 2 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+        <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, then pack rock around each one.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$340.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">17 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">17 stones with 2 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-note">Lay 1"–2" sand bed per stone.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$349.50</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+        <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path.</td></tr>
+        <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground</div><div class="card-note">2 bags for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges</div><div class="card-note">Tuck and clip for a clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">U-Haul · Montana Rock · 17 Stones · Excl. Labour</span></div><div class="gt-amount">$1,487.54</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out. U-Haul + landfill = $109 total.</div>
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCENARIO H — U-Haul · Montana Rock · 23 Stones = $1,607.54
+  ══════════════════════════════════════════ -->
+  <div class="scenario-panel" id="panel-h">
+  <div class="body">
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 1 — Removal &amp; Preparation</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>1</td><td class="product">U-Haul + Landfill Fees</td><td class="purpose">Tiles and debris removal and disposal</td><td>Trip</td><td class="num">1.0</td><td class="num">$109.00</td><td class="total-cell">$109.00</td><td class="note">U-Haul rental + landfill drop-off fees combined.</td></tr>
+        <tr><td>2</td><td class="product">Work Gloves (Heavy Duty)</td><td class="purpose">Hand protection</td><td>Pair</td><td class="num">0.0</td><td class="num">$18.00</td><td class="total-cell zero">$0.00</td><td class="note">~$18 at Home Depot. Update qty if needed.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">U-Haul + Landfill Fees</div><div class="card-total">$109.00</div></div><div class="card-purpose">Tiles and debris removal and disposal</div><div class="card-note">U-Haul rental + landfill drop-off fees combined.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 1 Subtotal</span><strong>$109.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 2 — Edging &amp; Border</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>3</td><td class="product">Landscape Edging — Black Steel</td><td class="purpose">Define clean border along one side of the 75 ft path</td><td>Linear ft</td><td class="num">83.0</td><td class="num">$2.20</td><td class="total-cell">$182.60</td><td class="note">75 ft + 10% buffer = 83 ft. One side only — along fence line.</td></tr>
+        <tr><td>4</td><td class="product">Edging Anchor Stakes (6")</td><td class="purpose">Secure steel edging firmly into ground</td><td>Pack (25)</td><td class="num">1.0</td><td class="num">$8.50</td><td class="total-cell">$8.50</td><td class="note">~8 stakes needed. 1 pack of 25 covers it.</td></tr>
+        <tr><td>5</td><td class="product">Rubber Mallet</td><td class="purpose">Drive stakes and set edging flush to grade</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Edging — Black Steel</div><div class="card-total">$182.60</div></div><div class="card-purpose">Define clean border along one side of the 75 ft path</div><div class="card-note">75 ft + 10% buffer = 83 ft. One side only.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Edging Anchor Stakes (6")</div><div class="card-total">$8.50</div></div><div class="card-purpose">Secure steel edging firmly into ground</div><div class="card-note">~8 stakes needed. 1 pack of 25 covers it.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 2 Subtotal</span><strong>$191.10</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 3 — Weed Barrier</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>6</td><td class="product">Weed Barrier Fabric — 3.2 oz+ Non-Woven</td><td class="purpose">Block weed growth under rock</td><td>Sq ft</td><td class="num">368.0</td><td class="num">$0.08</td><td class="total-cell">$29.44</td><td class="note">350 sq ft + 5% overlap. 4ft × 100ft roll covers the full path.</td></tr>
+        <tr><td>7</td><td class="product">Landscape Fabric Ground Pins (6")</td><td class="purpose">Anchor weed barrier securely</td><td>Pack (50)</td><td class="num">1.0</td><td class="num">$9.00</td><td class="total-cell">$9.00</td><td class="note">1 pack of 50 is more than sufficient.</td></tr>
+        <tr><td>8</td><td class="product">Landscape Fabric Seam Tape</td><td class="purpose">Seal overlapping fabric seams</td><td>Roll</td><td class="num">1.0</td><td class="num">$6.50</td><td class="total-cell">$6.50</td><td class="note">1 roll sufficient for a 75 ft layout.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Weed Barrier Fabric — 3.2 oz+</div><div class="card-total">$29.44</div></div><div class="card-purpose">Block weed growth under rock</div><div class="card-note">4ft × 100ft roll covers the full path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Ground Pins</div><div class="card-total">$9.00</div></div><div class="card-purpose">Anchor weed barrier</div><div class="card-note">1 pack of 50 is more than sufficient.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Seam Tape</div><div class="card-total">$6.50</div></div><div class="card-purpose">Seal overlapping fabric seams</div><div class="card-note">1 roll sufficient for 75 ft layout.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 3 Subtotal</span><strong>$44.94</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 4 — Base Gravel Layer</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>9</td><td class="product">10mm Round Washed Rock</td><td class="purpose">1" compactable base layer</td><td>Ton</td><td class="num">1.0</td><td class="num">$100.00</td><td class="total-cell">$100.00</td><td class="note">Sufficient for 350 sq ft path at 1" depth.</td></tr>
+        <tr><td>10</td><td class="product">Rock Delivery Fee — First Bag</td><td class="purpose">Delivery for base gravel</td><td>Flat fee</td><td class="num">1.0</td><td class="num">$120.00</td><td class="total-cell">$120.00</td><td class="note">Combine orders where possible to reduce costs.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">10mm Round Washed Rock</div><div class="card-total">$100.00</div></div><div class="card-purpose">1" base layer</div><div class="card-note">Sufficient for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — First Bag</div><div class="card-total">$120.00</div></div><div class="card-purpose">Delivery for base gravel</div><div class="card-note">Combine orders to reduce costs.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 4 Subtotal</span><strong>$220.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 5 — Decorative Rock</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>11</td><td class="product">20mm Montana Rock</td><td class="purpose">Decorative surface finish across 75 ft path</td><td>Ton/Bag</td><td class="num">2.0</td><td class="num">$240.00</td><td class="total-cell">$480.00</td><td class="note">2 tons covers 350 sq ft at 2" depth. Premium Montana Rock.</td></tr>
+        <tr><td>12</td><td class="product">Rock Delivery Fee — 2nd &amp; 3rd Bag</td><td class="purpose">Delivery for decorative rock</td><td>Per bag</td><td class="num">2.0</td><td class="num">$35.00</td><td class="total-cell">$70.00</td><td class="note">2nd and 3rd bag at $35 each.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">20mm Montana Rock</div><div class="card-total">$480.00</div></div><div class="card-purpose">Decorative surface finish</div><div class="card-note">2 tons covers 350 sq ft at 2" depth. $240/ton.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Rock Delivery Fee — 2nd &amp; 3rd Bag</div><div class="card-total">$70.00</div></div><div class="card-purpose">Delivery for decorative rock</div><div class="card-note">2nd and 3rd bag at $35 each.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 5 Subtotal</span><strong>$550.00</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 6 — Stepping Stones (23 stones · 1 ft gap)</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>13</td><td class="product">Flagstone Stepping Stones (~18"×16")</td><td class="purpose">Stepping stone path along 70 ft length</td><td>Stone</td><td class="num">23.0</td><td class="num">$20.00</td><td class="total-cell">$460.00</td><td class="note">23 stones with 1 ft gap between each. ~$25–$35/stone at Amico Stone.</td></tr>
+        <tr><td>14</td><td class="product">Coarse Levelling Sand</td><td class="purpose">Sand bed under each stepping stone</td><td>Bag (30kg)</td><td class="num">1.0</td><td class="num">$9.50</td><td class="total-cell">$9.50</td><td class="note">Lay 1"–2" sand bed per stone, then pack rock around each one.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Flagstone Stepping Stones</div><div class="card-total">$460.00</div></div><div class="card-purpose">Stepping stone path along 70 ft length</div><div class="card-meta"><div class="card-meta-item"><div class="card-meta-label">Qty</div><div class="card-meta-value">23 stones</div></div><div class="card-meta-item"><div class="card-meta-label">Unit Price</div><div class="card-meta-value">$20.00</div></div></div><div class="card-note">23 stones with 1 ft gap. ~$25–$35/stone at Amico Stone.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Coarse Levelling Sand</div><div class="card-total">$9.50</div></div><div class="card-purpose">Sand bed under each stepping stone</div><div class="card-note">Lay 1"–2" sand bed per stone.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 6 Subtotal</span><strong>$469.50</strong></div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-header"><div class="phase-dot"></div><div class="phase-title">Phase 7 — Finishing &amp; Cleanup</div></div>
+      <div class="desktop-table"><table><thead><tr><th>#</th><th>Product / Material</th><th>Purpose</th><th>Unit</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>15</td><td class="product">Landscape / Fan Rake</td><td class="purpose">Spread and level rock evenly</td><td>Item</td><td class="num">1.0</td><td class="num">—</td><td class="total-cell zero">$0.00</td><td class="note">Likely already owned.</td></tr>
+        <tr><td>16</td><td class="product">Fill Topsoil (for low spots)</td><td class="purpose">Level uneven ground before weed barrier</td><td>Bag (40L)</td><td class="num">2.0</td><td class="num">$8.50</td><td class="total-cell">$17.00</td><td class="note">2 bags appropriate for 350 sq ft path.</td></tr>
+        <tr><td>17</td><td class="product">Landscape Fabric Joining Clips / Zip Ties</td><td class="purpose">Secure fabric edges at edging border</td><td>Pack</td><td class="num">1.0</td><td class="num">$6.00</td><td class="total-cell">$6.00</td><td class="note">Tuck and clip fabric behind edging for a clean finish.</td></tr>
+      </tbody></table></div>
+      <div class="mobile-cards">
+        <div class="card"><div class="card-top"><div class="card-product">Fill Topsoil (for low spots)</div><div class="card-total">$17.00</div></div><div class="card-purpose">Level uneven ground</div><div class="card-note">2 bags for 350 sq ft path.</div></div>
+        <div class="card"><div class="card-top"><div class="card-product">Landscape Fabric Joining Clips</div><div class="card-total">$6.00</div></div><div class="card-purpose">Secure fabric edges</div><div class="card-note">Tuck and clip for a clean finish.</div></div>
+      </div>
+      <div class="phase-sub"><span>Phase 7 Subtotal</span><strong>$23.00</strong></div>
+    </div>
+    <div class="grand-total"><div class="gt-box"><div class="gt-label">Estimated Project Total<br><span style="font-size:9px;opacity:0.6;letter-spacing:1px">U-Haul · Montana Rock · 23 Stones · Excl. Labour</span></div><div class="gt-amount">$1,607.54</div></div></div>
+    <div class="legend"><strong>Legend:</strong>&nbsp; 🔵 Qty = calculated for 75 ft × 4 ft path (350 sq ft) &nbsp;|&nbsp; 🟡 Unit Price = update with current supplier quotes &nbsp;|&nbsp; 🟢 Total = auto-calculated</div>
+    <div class="disclaimer">Pricing based on Calgary suppliers: BulkDirect, Amico Stone Supply, Home Depot, Amazon. Does not include labour if hiring out. U-Haul + landfill = $109 total.</div>
+  </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  const totals = {
+    a: '$1,201.52', b: '$1,081.52', c: '$1,285.52', d: '$1,165.52',
+    e: '$1,403.54', f: '$1,523.54', g: '$1,487.54', h: '$1,607.54'
+  };
+  function showScenario(id) {
+    document.querySelectorAll('.scenario-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    document.getElementById('header-total').textContent = totals[id];
+  }
+  showScenario('d');
+</script>
+</body>
+</html>
